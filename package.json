@@ -1,0 +1,32 @@
+{
+  "name": "oblo-util",
+  "version": "0.1.0",
+  "description": "Utilities module suitable for both Node.js and client-side use",
+  "main": "oblo-util.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "Martijn M. Schrage",
+    "email": "martijn@oblomov.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Oblosys/oblo-util.git"
+  },
+  "keywords": [
+    "utility",
+    "server",
+    "client",
+    "browser"
+  ],
+  "bugs": {
+    "url": "https://github.com/Oblosys/oblo-util/issues"
+  },
+    "dependencies": {
+    "underscore": ">=1.4.3"
+  },
+  "devDependencies": {
+  }
+}
