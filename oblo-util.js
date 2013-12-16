@@ -26,6 +26,15 @@
       console.log(msg);
   };
 
+  // Constrain x to the interval [min .. max]
+  util.clip = function(min, max, x) {
+    return Math.max(min, Math.min(x, max));
+  }
+  
+  util.square = function(x) {
+    return x*x;
+  }
+
   // NOTE: replicated objects are only cloned on top-level
   util.replicate = function(n,x) {
     var xs = [];
