@@ -112,4 +112,4 @@
       $elt.removeAttr(attrName);  
   };
 
-})(typeof exports == 'undefined' ? this.util={} : exports); // pass exports if we're on the server, otherwise, create oblo-util
+})(typeof exports == 'undefined' ? this.util={} : exports); // pass exports if we're on the server, otherwise, create object util
