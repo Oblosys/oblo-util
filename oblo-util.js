@@ -1,4 +1,4 @@
-//     oblo-util.js 0.2.0
+//     oblo-util.js 0.2.1
 
 //     (c) 2013-2011 Martijn M. Schrage, Oblomomov Systems
 //     Oblo-util may be freely distributed under the MIT license.
@@ -10,7 +10,7 @@
   
   // Notes: basic modules, no active importing, mainly experiment for using npm also on client
   // needs to be defined before we call it.
-  // NOTE: on client, use last elt of path for oject ref, goes wrong with -'s in name.., so need to specify it in that case
+  // NOTE: on client, use last elt of path for object ref, goes wrong with -'s in name.., so need to specify it in that case
   if (typeof window != 'undefined') // on client, NOTE: we have to manually include the required module scripts in the HTML
     window.require = function(moduleName, clientModuleObject) {
       return window[clientModuleObject ? clientModuleObject : moduleName.split('/').pop()];
@@ -45,7 +45,8 @@
 
   // pad integer with leading 0's when necessary 
   util.padZero = function(l, n) {
-    return ('0000000000000000000000'+n).slice(-l);
+    var nrOfZeros = Math.max(0, l-(''+n).length);
+    return util.replicate(nrOfZeros,'0').join('')+n;
   };
 
   // depth is to prevent hanging on circular objects
