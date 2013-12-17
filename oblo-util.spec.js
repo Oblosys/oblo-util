@@ -48,21 +48,6 @@ describe("clip", function() {
   });
 });
 
-describe("showDate", function() {
-  it("shows a date", function() {
-      expect(util.showDate(new Date(2012,0,2)) ).toEqual('02-01-2012');
-  });
-});
-
-describe("showTime", function() {
-  it("shows a time", function() {
-      expect( util.showTime(new Date(10,1,2013,1,2,3)) ).toEqual('01:02:03');
-  });
-  it("handles afternoon", function() {
-      expect( util.showTime(new Date(10,1,2013,13,2,3)) ).toEqual('13:02:03');
-  });
-});
-
 describe("replicate", function() {
   it("handles positive values", function() {
     expect( util.replicate(3,'x') ).toEqual(['x','x','x']);
@@ -86,3 +71,28 @@ describe("padZero", function() {
     expect( util.padZero(-2,23) ).toEqual('23');
   }); 
 });
+
+describe("showTime", function() {
+  it("shows a time", function() {
+      expect( util.showTime(new Date(10,1,2013,1,2,3)) ).toEqual('01:02:03');
+  });
+  it("handles afternoon", function() {
+      expect( util.showTime(new Date(10,1,2013,13,2,3)) ).toEqual('13:02:03');
+  });
+});
+
+describe("showDate", function() {
+  it("shows a date", function() {
+      expect( util.showDate(new Date(2012,0,2)) ).toEqual('02-01-2012');
+  });
+});
+
+describe("readDate", function() {
+  it("reads a date", function() {
+    var date = util.readDate('01-03-2013'); 
+    expect( date.getDate() ).toEqual(1);
+    expect( date.getMonth() ).toEqual(2);
+    expect( date.getFullYear() ).toEqual(2013);
+  });
+});
+
