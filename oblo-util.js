@@ -21,19 +21,20 @@
 
   util.debug = true; // set this to false on deployment
   
-  util.log = function(msg) {
+  // Call console.log with all parameters, but only when util.debug == true
+  util.log = function() {
     if (util.debug && typeof console != 'undefined')
-      console.log(msg);
+      console.log.apply(null, Array.prototype.slice.call(arguments));
   };
 
   // Constrain x to the interval [min .. max]
   util.clip = function(min, max, x) {
     return Math.max(min, Math.min(x, max));
-  }
+  };
   
   util.square = function(x) {
     return x*x;
-  }
+  };
 
   // NOTE: replicated objects are only cloned on top-level
   util.replicate = function(n,x) {
