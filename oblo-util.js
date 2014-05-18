@@ -1,4 +1,4 @@
-//     oblo-util.js 0.3.0
+//     oblo-util.js 0.3.1
 
 //     (c) 2013-2011 Martijn M. Schrage, Oblomomov Systems
 //     Oblo-util may be freely distributed under the MIT license.
@@ -24,7 +24,8 @@
   // Call console.log with all parameters, but only when util.debug == true
   util.log = function() {
     if (util.debug && typeof console != 'undefined')
-      console.log.apply(null, Array.prototype.slice.call(arguments));
+      var log = Function.prototype.bind.call(console.log, console);
+      log.apply(null, Array.prototype.slice.call(arguments));
   };
 
   // Constrain x to the interval [min .. max]
