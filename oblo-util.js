@@ -51,12 +51,14 @@
   };
 
   // depth is to prevent hanging on circular objects
-  util.showJSON = function(json,indent,depth) {
+  util.showJSON = function(json,depth,indent) {
     indent = indent || '';
     depth = depth || 0;
     var str = '';
     
-    if (!json) {
+    if (typeof json == 'undefined') {
+      str += 'undefined';
+    } else if (!json) {
       str += 'null';
     } else if (depth>=10) { // max depth
       str += typeof json != 'object' ? json : Array.isArray(json) ? '[...]' : '{...}';
@@ -65,11 +67,10 @@
         str += '[]';
       else {
         for (var i = 0; i<json.length; i++)
-          str += (i==0?'[ ':indent + ', ') + util.showJSON(json[i],'  '+indent, depth+1)+'\n';
+          str += (i==0?'[ ':indent + ', ') + util.showJSON(json[i], depth+1,indent+'  ')+'\n';
         str += indent + ']';
       }
     } else if (typeof json == 'object') {
-      console.log('json: '+json);
       var keys = Object.keys(json); // TODO: use underscore version for safety
       if (keys.length ==0 )
         str += '{}';
@@ -77,7 +78,7 @@
         for (var i = 0; i<keys.length; i++)
           str += (i==0?'{ ':indent + ', ') + keys[i] + ':' +
           (typeof json[keys[i]] == 'object' ? '\n' + indent +'  ' : ' ') + // for object children start new line
-          util.showJSON(json[keys[i]],'  '+indent, depth+1)+'\n';
+          util.showJSON(json[keys[i]], depth+1,indent+'  ')+'\n';
         str += indent + '}';
       }
     } else {
