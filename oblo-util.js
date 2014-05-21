@@ -15,8 +15,7 @@
     window.require = function(moduleName, clientModuleObject) {
       return window[clientModuleObject ? clientModuleObject : moduleName.split('/').pop()];
     };
-    
-
+  
   var _ = require('underscore', '_'); // underscore calls itself '_' on client
 
   util.debug = true; // set this to false on deployment
@@ -57,34 +56,32 @@
     depth = depth || 0;
     var str = '';
     
-    if (depth>=10) // max depth
+    if (!json) {
+      str += 'null';
+    } else if (depth>=10) { // max depth
       str += typeof json != 'object' ? json : Array.isArray(json) ? '[...]' : '{...}';
-    else {   
-      if (Array.isArray(json)) {
-        if (json.length ==0 )
-          str += '[]';
-        else {
-          for (var i = 0; i<json.length; i++)
-            str += (i==0?'[ ':indent + ', ') + util.showJSON(json[i],'  '+indent, depth+1)+'\n';
-          str += indent + ']';
-        }
-      } 
+    } else if (Array.isArray(json)) {
+      if (json.length ==0 )
+        str += '[]';
       else {
-        if (typeof json == 'object') {
-          var keys = Object.keys(json); // TODO: use underscore version for safety
-          if (keys.length ==0 )
-            str += '{}';
-          else {
-            for (var i = 0; i<keys.length; i++)
-              str += (i==0?'{ ':indent + ', ') + keys[i] + ':' +
-              (typeof json[keys[i]] == 'object' ? '\n' + indent +'  ' : ' ') + // for object children start new line
-              util.showJSON(json[keys[i]],'  '+indent, depth+1)+'\n';
-            str += indent + '}';
-          }
-        }
-        else
-          str += json;
+        for (var i = 0; i<json.length; i++)
+          str += (i==0?'[ ':indent + ', ') + util.showJSON(json[i],'  '+indent, depth+1)+'\n';
+        str += indent + ']';
       }
+    } else if (typeof json == 'object') {
+      console.log('json: '+json);
+      var keys = Object.keys(json); // TODO: use underscore version for safety
+      if (keys.length ==0 )
+        str += '{}';
+      else {
+        for (var i = 0; i<keys.length; i++)
+          str += (i==0?'{ ':indent + ', ') + keys[i] + ':' +
+          (typeof json[keys[i]] == 'object' ? '\n' + indent +'  ' : ' ') + // for object children start new line
+          util.showJSON(json[keys[i]],'  '+indent, depth+1)+'\n';
+        str += indent + '}';
+      }
+    } else {
+      str += json;
     }
     return str;
   };
