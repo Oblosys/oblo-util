@@ -1,6 +1,6 @@
-//     oblo-util.js 0.3.1
+//     oblo-util.js 0.4.0
 
-//     (c) 2013-2011 Martijn M. Schrage, Oblomomov Systems
+//     (c) 2014-2011 Martijn M. Schrage, Oblomomov Systems
 //     Oblo-util may be freely distributed under the MIT license.
 //     For all details and documentation:
 //     https://github.com/oblosys/oblo-util
@@ -50,7 +50,12 @@
     return util.replicate(nrOfZeros,'0').join('')+n;
   };
 
-  // depth is to prevent hanging on circular objects
+  util.addslashes = function( str ) {
+    return (str + '').replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
+  }
+  
+  // optional arg maxDepth is to prevent hanging on circular objects
+  // optional arg indent is to prefix every generated line with indentation
   util.showJSON = function(json,maxDepth,indent) {
     indent = indent || '';
     maxDepth = typeof maxDepth == 'undefined' ? 20 : maxDepth;
@@ -58,10 +63,14 @@
     
     if (typeof json == 'undefined') {
       str += 'undefined';
-    } else if (!json) {
+    } else if (json == null) {
       str += 'null';
+    } else if (typeof json == 'string') {
+      str += '\''+util.addslashes(json)+'\'';
+    } else if (typeof json != 'object') {
+      str += json;
     } else if (maxDepth<=0) {
-      str += typeof json != 'object' ? json : Array.isArray(json) ? '[...]' : '{...}';
+      str += Array.isArray(json) ? '[...]' : '{...}';
     } else if (Array.isArray(json)) {
       if (json.length ==0 )
         str += '[]';
@@ -77,12 +86,12 @@
       else {
         for (var i = 0; i<keys.length; i++)
           str += (i==0?'{ ':indent + ', ') + keys[i] + ':' +
-          (typeof json[keys[i]] == 'object' ? '\n' + indent +'  ' : ' ') + // for object children start new line
+          (typeof json[keys[i]] == 'object' && json[keys[i]] != null ? '\n' + indent +'  ' : ' ') + // for object children start new line
           util.showJSON(json[keys[i]], maxDepth-1,indent+'  ')+'\n';
         str += indent + '}';
       }
     } else {
-      str += json;
+      console.error('util.showJSON: internal error, unhandled type: \'' + typeof json + '\''); 
     }
     return str;
   };
