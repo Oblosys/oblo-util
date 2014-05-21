@@ -51,23 +51,23 @@
   };
 
   // depth is to prevent hanging on circular objects
-  util.showJSON = function(json,depth,indent) {
+  util.showJSON = function(json,maxDepth,indent) {
     indent = indent || '';
-    depth = depth || 0;
+    maxDepth = typeof maxDepth == 'undefined' ? 20 : maxDepth;
     var str = '';
     
     if (typeof json == 'undefined') {
       str += 'undefined';
     } else if (!json) {
       str += 'null';
-    } else if (depth>=10) { // max depth
+    } else if (maxDepth<=0) {
       str += typeof json != 'object' ? json : Array.isArray(json) ? '[...]' : '{...}';
     } else if (Array.isArray(json)) {
       if (json.length ==0 )
         str += '[]';
       else {
         for (var i = 0; i<json.length; i++)
-          str += (i==0?'[ ':indent + ', ') + util.showJSON(json[i], depth+1,indent+'  ')+'\n';
+          str += (i==0?'[ ':indent + ', ') + util.showJSON(json[i], maxDepth-1,indent+'  ')+'\n';
         str += indent + ']';
       }
     } else if (typeof json == 'object') {
@@ -78,7 +78,7 @@
         for (var i = 0; i<keys.length; i++)
           str += (i==0?'{ ':indent + ', ') + keys[i] + ':' +
           (typeof json[keys[i]] == 'object' ? '\n' + indent +'  ' : ' ') + // for object children start new line
-          util.showJSON(json[keys[i]], depth+1,indent+'  ')+'\n';
+          util.showJSON(json[keys[i]], maxDepth-1,indent+'  ')+'\n';
         str += indent + '}';
       }
     } else {
