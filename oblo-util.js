@@ -60,10 +60,10 @@
     return (str + '').replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
   }
   
+  // optional arg indentStr is to prefix every generated line with indentation
   // optional arg maxDepth is to prevent hanging on circular objects
-  // optional arg indent is to prefix every generated line with indentation
-  util.showJSON = function(json,maxDepth,indent) {
-    indent = indent || '';
+  util.showJSON = function(json,indentStr,maxDepth) {
+    indentStr = indentStr || '';
     maxDepth = typeof maxDepth == 'undefined' ? 20 : maxDepth;
     var str = '';
     
@@ -82,8 +82,8 @@
         str += '[]';
       else {
         for (var i = 0; i<json.length; i++)
-          str += (i==0?'[ ':indent + ', ') + util.showJSON(json[i], maxDepth-1,indent+'  ')+'\n';
-        str += indent + ']';
+          str += (i==0?'[ ':indentStr + ', ') + util.showJSON(json[i],indentStr+'  ', maxDepth-1)+'\n';
+        str += indentStr + ']';
       }
     } else if (typeof json == 'object') {
       var keys = Object.keys(json); // TODO: use underscore version for safety
@@ -91,10 +91,10 @@
         str += '{}';
       else {
         for (var i = 0; i<keys.length; i++)
-          str += (i==0?'{ ':indent + ', ') + keys[i] + ':' +
-          (typeof json[keys[i]] == 'object' && json[keys[i]] != null ? '\n' + indent +'  ' : ' ') + // for object children start new line
-          util.showJSON(json[keys[i]], maxDepth-1,indent+'  ')+'\n';
-        str += indent + '}';
+          str += (i==0 ? '{ ' : indentStr + ', ') + keys[i] + ':' +
+          (typeof json[keys[i]] == 'object' && json[keys[i]] != null ? '\n' + indentStr + '  ' : ' ') + // for object children start new line
+          util.showJSON(json[keys[i]], indentStr+'  ', maxDepth-1) + '\n';
+        str += indentStr + '}';
       }
     } else {
       console.error('util.showJSON: internal error, unhandled type: \'' + typeof json + '\''); 
