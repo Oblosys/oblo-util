@@ -1,4 +1,4 @@
-//     oblo-util.js 0.4.0
+//     oblo-util.js 0.5.0
 
 //     (c) 2014-2011 Martijn M. Schrage, Oblomomov Systems
 //     Oblo-util may be freely distributed under the MIT license.
