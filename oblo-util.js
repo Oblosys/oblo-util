@@ -82,7 +82,7 @@
         str += '[]';
       else {
         for (var i = 0; i<json.length; i++)
-          str += (i==0?'[ ':indentStr + ', ') + util.showJSON(json[i],indentStr+'  ', maxDepth-1)+'\n';
+          str += (i==0 ? '[ ' : indentStr + ', ') + util.showJSON(json[i],indentStr+'  ', maxDepth-1)+'\n';
         str += indentStr + ']';
       }
     } else if (typeof json == 'object') {
@@ -92,8 +92,8 @@
       else {
         for (var i = 0; i<keys.length; i++)
           str += (i==0 ? '{ ' : indentStr + ', ') + keys[i] + ':' +
-          (typeof json[keys[i]] == 'object' && json[keys[i]] != null ? '\n' + indentStr + '  ' : ' ') + // for object children start new line
-          util.showJSON(json[keys[i]], indentStr+'  ', maxDepth-1) + '\n';
+          (typeof json[keys[i]] == 'object' && json[keys[i]] != null ? '\n' + indentStr + '    ' : ' ') + // for object children start new line
+          util.showJSON(json[keys[i]], indentStr+'    ', maxDepth-1) + '\n';
         str += indentStr + '}';
       }
     } else {
