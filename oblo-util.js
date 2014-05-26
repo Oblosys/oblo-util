@@ -27,6 +27,12 @@
       log.apply(null, Array.prototype.slice.call(arguments));
   };
 
+  util.error = function() {
+    if (typeof console != 'undefined')
+      var error = Function.prototype.bind.call(console.error, console);
+      error.apply(null, Array.prototype.slice.call(arguments));
+  };
+
   // Constrain x to the interval [min .. max]
   util.clip = function(min, max, x) {
     return Math.max(min, Math.min(x, max));
