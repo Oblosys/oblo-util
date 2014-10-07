@@ -1,4 +1,4 @@
-//     oblo-util.js 0.5.0
+//     oblo-util.js 0.6.1
 
 //     (c) 2014-2011 Martijn M. Schrage, Oblomomov Systems
 //     Oblo-util may be freely distributed under the MIT license.
@@ -50,10 +50,16 @@
     return xs;
   };
 
+  // pad str with leading c's for a result string of length l (c is assumed to be a character)
+  // NOTE: str is not clipped, so result may get longer than l
+  util.pad = function(c, l, str) {
+    var paddingLength = Math.max(0, l-(''+str).length);
+    return util.replicate(paddingLength,c).join('')+str;
+  };
+  
   // pad integer with leading 0's when necessary 
   util.padZero = function(l, n) {
-    var nrOfZeros = Math.max(0, l-(''+n).length);
-    return util.replicate(nrOfZeros,'0').join('')+n;
+    return util.pad('0', l, n);
   };
 
   util.addslashes = function( str ) {

@@ -60,6 +60,18 @@ describe("replicate", function() {
   });
 });
 
+describe("pad", function() {
+  it("handles extreme padding", function() {
+    expect( util.pad('x',35,1) ).toEqual('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx1');
+  });
+  it("doesn't clip string wider than padding", function() {
+    expect( util.pad('x',2,'a larger string') ).toEqual('a larger string');
+  });
+  it("ignores negative padding", function() {
+    expect( util.pad(-2,'x','some string') ).toEqual('some string');
+  }); 
+});
+
 describe("padZero", function() {
   it("handles extreme padding", function() {
     expect( util.padZero(35,1) ).toEqual('00000000000000000000000000000000001');
@@ -67,10 +79,11 @@ describe("padZero", function() {
   it("doesn't clip number when wider than padding", function() {
     expect( util.padZero(2,1234) ).toEqual('1234');
   });
-  it("handles negative padding", function() {
+  it("ignores negative padding", function() {
     expect( util.padZero(-2,23) ).toEqual('23');
   }); 
 });
+
 
 describe("showTime", function() {
   it("shows a time", function() {

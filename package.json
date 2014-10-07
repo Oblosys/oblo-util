@@ -1,6 +1,6 @@
 {
   "name": "oblo-util",
-  "version": "0.5.0",
+  "version": "0.6.1",
   "description": "Utilities module suitable for both Node.js and client-side use",
   "main": "oblo-util.js",
   "scripts": {
