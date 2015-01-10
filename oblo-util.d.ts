@@ -1,4 +1,4 @@
-// Type definitions for oblo-util 0.6.2
+// Type definitions for oblo-util 0.6.3
 // Definitions by: Martijn Schrage <https://github.com/Oblosys/>
 /// <reference path="../jquery/jquery.d.ts" />
 
