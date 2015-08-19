@@ -3,9 +3,6 @@
   "version": "0.6.3",
   "description": "Utilities module suitable for both Node.js and client-side use",
   "main": "oblo-util.js",
-  "scripts": {
-    "test": "jasmine-node oblo-util.spec.js"
-  },
   "author": {
     "name": "Martijn M. Schrage",
     "email": "martijn@oblomov.com"
@@ -27,6 +24,11 @@
     "dependencies": {
     "underscore": ">=1.4.3"
   },
+  
   "devDependencies": {
+    "jasmine-node": ">=1.11"
+  },
+  "scripts": {
+    "test": "jasmine-node oblo-util.spec.js"
   }
 }
