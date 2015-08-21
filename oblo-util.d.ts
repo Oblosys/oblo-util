@@ -1,7 +1,17 @@
-// Type definitions for oblo-util 0.6.3
-// Definitions by: Martijn Schrage <https://github.com/Oblosys/>
-/// <reference path="../jquery/jquery.d.ts" />
+// This file is a copy of oblo-util/oblo-util.d.ts on https://github.com/borisyankov/DefinitelyTyped,
+// but has an extra ../typings in the jQuery reference path, so it can be used from the node_modules/oblo-util
+// directory where it is installed by npm.
+//
+// The condition for this to work is that the jQuery typings are in a directory 'typings' that is at the same 
+// level as node_modules (which is normally the case.)
 
+// Type definitions for oblo-util v0.6.4
+// Project: https://github.com/Oblosys/oblo-util
+// Definitions by: Martijn Schrage <https://github.com/Oblosys/>
+// Definitions: https://github.com/borisyankov/DefinitelyTyped
+
+
+/// <reference path="../../typings/jquery/jquery.d.ts" />
 
 interface ObloUtilStatic {
   debug : boolean;
