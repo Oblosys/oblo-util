@@ -125,7 +125,7 @@
   };
 
   /* Set boolean DOM attribute for jQuery object $elt according to HTML standard.
-   * (absence denotes false, attrName=AttrName denotes true) */
+   * (absence denotes false, attrName=attrName denotes true) */
   util.setAttr = function($elt, attrName, isSet) {
     if (isSet)
       $elt.attr(attrName, attrName);
