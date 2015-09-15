@@ -6,8 +6,8 @@
 //     https://github.com/oblosys/oblo-util
 
 (function(util){ // Cannot have '-' in name, so use 'util' rather than the verbose 'oblo_util'
-  
-  
+
+
   // Notes: basic modules, no active importing, mainly experiment for using npm also on client
   // needs to be defined before we call it.
   // NOTE: on client, use last elt of path for object ref, goes wrong with -'s in name.., so need to specify it in that case
@@ -15,11 +15,11 @@
     window.require = function(moduleName, clientModuleObject) {
       return window[clientModuleObject ? clientModuleObject : moduleName.split('/').pop()];
     };
-  
+
   var _ = require('underscore', '_'); // underscore calls itself '_' on client
 
   util.debug = true; // set this to false on deployment
-  
+
   // Call console.log with all parameters, but only when util.debug == true
   util.log = function() {
     if (util.debug && typeof console != 'undefined')
@@ -37,7 +37,7 @@
   util.clip = function(min, max, x) {
     return Math.max(min, Math.min(x, max));
   };
-  
+
   util.square = function(x) {
     return x*x;
   };
@@ -45,7 +45,7 @@
   // NOTE: replicated objects are only cloned on top-level
   util.replicate = function(n,x) {
     var xs = [];
-    for (var i=0; i<n; i++) 
+    for (var i=0; i<n; i++)
       xs.push(_.clone(x));
     return xs;
   };
@@ -56,8 +56,8 @@
     var paddingLength = Math.max(0, l-(''+str).length);
     return util.replicate(paddingLength,c).join('')+str;
   };
-  
-  // pad integer with leading 0's when necessary 
+
+  // pad integer with leading 0's when necessary
   util.padZero = function(l, n) {
     return util.pad('0', l, n);
   };
@@ -65,14 +65,14 @@
   util.addslashes = function( str ) {
     return (str + '').replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
   }
-  
+
   // optional arg indentStr is to prefix every generated line with indentation
   // optional arg maxDepth is to prevent hanging on circular objects
   util.showJSON = function(json,indentStr,maxDepth) {
     indentStr = indentStr || '';
     maxDepth = typeof maxDepth == 'undefined' ? 20 : maxDepth;
     var str = '';
-    
+
     if (typeof json == 'undefined') {
       str += 'undefined';
     } else if (json == null) {
@@ -103,11 +103,11 @@
         str += indentStr + '}';
       }
     } else {
-      console.error('util.showJSON: internal error, unhandled type: \'' + typeof json + '\''); 
+      console.error('util.showJSON: internal error, unhandled type: \'' + typeof json + '\'');
     }
     return str;
   };
-  
+
   util.showTime = function(date) {
     return util.padZero(2, date.getHours()) + ':' + util.padZero(2, date.getMinutes()) + ':' + util.padZero(2, date.getSeconds());
   };
@@ -127,10 +127,10 @@
   /* Set boolean DOM attribute for jQuery object $elt according to HTML standard.
    * (absence denotes false, attrName=AttrName denotes true) */
   util.setAttr = function($elt, attrName, isSet) {
-    if (isSet) 
+    if (isSet)
       $elt.attr(attrName, attrName);
     else
-      $elt.removeAttr(attrName);  
+      $elt.removeAttr(attrName);
   };
 
 })(typeof exports == 'undefined' ? this.util={} : exports); // pass exports if we're on the server, otherwise, create object util
