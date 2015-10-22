@@ -6,6 +6,36 @@ describe('debug', function() {
   });
 });
 
+describe('log', function() {
+  it('calls console.log when util.debug == true', function() {
+    console.log = jasmine.createSpy('log');
+    util.debug = true;
+    util.log('log test');
+    expect(console.log).toHaveBeenCalledWith('log test');
+  });
+  it('does not call console.log when util.debug == false', function() {
+    console.log = jasmine.createSpy('log');
+    util.debug = false;
+    util.log('log test');
+    expect(console.log).not.toHaveBeenCalled();
+  });
+});
+
+describe('error', function() {
+  it('calls console.error', function() {
+    console.log = jasmine.createSpy('log');
+    util.debug = true;
+    util.log('log test');
+    expect(console.log).toHaveBeenCalledWith('log test');
+  });
+  it('does not call console.log when util.debug == false', function() {
+    console.log = jasmine.createSpy('log');
+    util.debug = false;
+    util.log('log test');
+    expect(console.log).not.toHaveBeenCalled();
+  });
+});
+
 describe('square', function() {
   it('squares positive values', function() {
     expect( util.square(4.2) ).toEqual(4.2*4.2);
@@ -140,5 +170,9 @@ describe('readDate', function() {
     expect( date.getDate() ).toEqual(1);
     expect( date.getMonth() ).toEqual(2);
     expect( date.getFullYear() ).toEqual(2013);
+  });
+  it('throws an error on an invalid date string', function() {
+    expect( function() {util.readDate('no date');} )
+      .toThrow(new Error('Exception: Incorrect date: "no date"'));
   });
 });
