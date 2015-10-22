@@ -22,15 +22,17 @@
 
   // Call console.log with all parameters, but only when util.debug == true
   util.log = function() {
-    if (util.debug && typeof console != 'undefined')
+    if (util.debug && typeof console != 'undefined') {
       var log = Function.prototype.bind.call(console.log, console);
       log.apply(null, Array.prototype.slice.call(arguments));
+    }
   };
 
   util.error = function() {
-    if (typeof console != 'undefined')
+    if (typeof console != 'undefined') {
       var error = Function.prototype.bind.call(console.error, console);
       error.apply(null, Array.prototype.slice.call(arguments));
+    }
   };
 
   // Constrain x to the interval [min .. max]
@@ -66,7 +68,7 @@
     return (str + '').replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
   }
 
-  // optional arg indentStr is to prefix every generated line with indentation
+  // optional arg indentStr is to prefix every generated line after the first with indentation
   // optional arg maxDepth is to prevent hanging on circular objects
   util.showJSON = function(json,indentStr,maxDepth) {
     indentStr = indentStr || '';
