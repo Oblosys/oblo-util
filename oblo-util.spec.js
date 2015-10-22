@@ -84,6 +84,41 @@ describe('padZero', function() {
   });
 });
 
+describe('addslashes', function() {
+  it('adds a slash to \\, " and \'', function() {
+    expect( util.addslashes('\\ " \'') ).toEqual('\\\\ \\" \\\'');
+  });
+});
+
+describe('showJSON', function() {
+  it('shows an empty object as {}', function() {
+    expect( util.showJSON({}) ).toEqual('{}');
+  });
+  it('shows an empty array as []', function() {
+    expect( util.showJSON([]) ).toEqual('[]');
+  });
+  it('handles object with undefined, null, string, and array properties', function() {
+    obj = { p1: undefined, p2: null, p3: 'string\n', p4: [1,2] }
+    str = '{ p1: undefined\n'
+        + ', p2: null\n'
+        + ', p3: \'string\n\'\n'
+        + ', p4:\n'
+        + '    [ 1\n'
+        + '    , 2\n'
+        + '    ]\n'
+        + '}'
+    expect( util.showJSON(obj) ).toEqual(str);
+  });
+  it('prefixes each line with indentStr', function() {
+    expect( util.showJSON({p1: 1, p2: 2},'XX',2) )
+    .toEqual('{ p1: 1\nXX, p2: 2\nXX}');
+  });
+  it('respects maxDepth for arrays and objects', function() {
+    expect( util.showJSON({a: [2,[3]], o: {p2:{p3:{}}}},'',2) )
+    .toEqual('{ a:\n    [ 2\n    , [...]\n    ]\n, o:\n    { p2:\n        {...}\n    }\n}');
+  });
+});
+
 describe('showTime', function() {
   it('shows a time', function() {
       expect( util.showTime(new Date(10,1,2013,1,2,3)) ).toEqual('01:02:03');
