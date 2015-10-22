@@ -26,9 +26,11 @@
   },
   "devDependencies": {
     "istanbul": "^0.4.0",
-    "jasmine-node": ">=1.11"
+    "jasmine-node": "^2.0.0",
+    "jquery": "^2.1.4",
+    "jsdom": "^7.0.1"
   },
   "scripts": {
-    "test": "istanbul cover  --include-all-sources jasmine-node oblo-util.spec.js"
+    "test": "istanbul cover --include-all-sources jasmine-node *.spec.js && istanbul report text-summary lcov"
   }
 }
