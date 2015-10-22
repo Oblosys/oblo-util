@@ -151,16 +151,16 @@ describe('showJSON', function() {
 
 describe('showTime', function() {
   it('shows a time', function() {
-      expect( util.showTime(new Date(10,1,2013,1,2,3)) ).toEqual('01:02:03');
+    expect( util.showTime(new Date(10,1,2013,1,2,3)) ).toEqual('01:02:03');
   });
   it('handles afternoon', function() {
-      expect( util.showTime(new Date(10,1,2013,13,2,3)) ).toEqual('13:02:03');
+    expect( util.showTime(new Date(10,1,2013,13,2,3)) ).toEqual('13:02:03');
   });
 });
 
 describe('showDate', function() {
   it('shows a date', function() {
-      expect( util.showDate(new Date(2012,0,2)) ).toEqual('02-01-2012');
+    expect( util.showDate(new Date(2012,0,2)) ).toEqual('02-01-2012');
   });
 });
 
