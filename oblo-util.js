@@ -123,7 +123,7 @@
     if (parts.length == 3)
       return new Date(parts[2], parts[1]-1, parts[0]);
     else
-      throw 'Exception: Incorrect date: "'+dateStr+'"';
+      throw new Error("Incorrect date: '"+dateStr+"'");
   };
 
   /* Set boolean DOM attribute for jQuery object $elt according to HTML standard.

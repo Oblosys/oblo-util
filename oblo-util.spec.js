@@ -173,6 +173,6 @@ describe('readDate', function() {
   });
   it('throws an error on an invalid date string', function() {
     expect( function() {util.readDate('no date');} )
-      .toThrow(new Error('Exception: Incorrect date: "no date"'));
+      .toThrow(new Error("Incorrect date: 'no date'"));
   });
 });
