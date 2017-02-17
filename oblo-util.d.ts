@@ -5,7 +5,7 @@
 // The condition for this to work is that the jQuery typings are in a directory 'typings' that is at the same 
 // level as node_modules (which is normally the case.)
 
-// Type definitions for oblo-util v0.6.4
+// Type definitions for oblo-util v0.6.5
 // Project: https://github.com/Oblosys/oblo-util
 // Definitions by: Martijn Schrage <https://github.com/Oblosys/>
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
