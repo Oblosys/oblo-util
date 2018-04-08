@@ -1,40 +1,44 @@
-//     oblo-util.js 1.0.0
+//     oblo-util.ts 1.0.0
 
 //     (c) 2011-2018 Martijn M. Schrage, Oblomomov Systems
 //     Oblo-util may be freely distributed under the MIT license.
 //     For all details and documentation:
 //     https://github.com/oblosys/oblo-util
 
-// Constrain x to the interval [min .. max]
-export function clip(min, max, x) {
+// Constrain `x`, so `min <= x <= max`
+function clamp(min : number, max : number, x : number) {
   return Math.max(min, Math.min(x, max));
 };
 
-// NOTE: replicated objects are only cloned on top-level
-export function replicate(n,x) {
-  var xs = [];
-  for (var i=0; i<n; i++)
-    xs.push(_.clone(x));
-  return xs;
-};
+function addslashes(str : string) {
+  return ('' + str).replace(/[\\'']/g, '\\$&').replace(/\u0000/g, '\\0');
+}
 
-export function addslashes( str ) {
-  return (str + '').replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
+function clipLeft(n : number, str : string) {
+  if (!str) {
+    return str;
+  }
+  return str.length <= n ? str : '…' + str.slice(-n + 1);
+}
+
+function clipRight(n : number, str : string) {
+  if (!str) {
+    return str;
+  }
+  return str.length <= n ? str : str.slice(0, n - 1) + '…';
 }
 
 // optional arg indentStr is to prefix every generated line after the first with indentation
 // optional arg maxDepth is to prevent hanging on circular objects
-export function showJSON(json,indentStr,maxDepth) {
-  indentStr = indentStr || '';
-  maxDepth = typeof maxDepth == 'undefined' ? 20 : maxDepth;
-  var str = '';
+function showJSON(json : any, indentStr : string = '', maxDepth : number = 20) {
+  let str = '';
 
   if (typeof json == 'undefined') {
     str += 'undefined';
   } else if (json == null) {
     str += 'null';
   } else if (typeof json == 'string') {
-    str += '\''+util.addslashes(json)+'\'';
+    str += '\''+addslashes(json)+'\'';
   } else if (typeof json != 'object') {
     str += json;
   } else if (maxDepth<=0) {
@@ -44,7 +48,7 @@ export function showJSON(json,indentStr,maxDepth) {
       str += '[]';
     else {
       for (var i = 0; i<json.length; i++)
-        str += (i==0 ? '[ ' : indentStr + ', ') + util.showJSON(json[i],indentStr+'  ', maxDepth-1)+'\n';
+        str += (i==0 ? '[ ' : indentStr + ', ') + showJSON(json[i],indentStr+'  ', maxDepth-1)+'\n';
       str += indentStr + ']';
     }
   } else if (typeof json == 'object') {
@@ -55,27 +59,35 @@ export function showJSON(json,indentStr,maxDepth) {
       for (var i = 0; i<keys.length; i++)
         str += (i==0 ? '{ ' : indentStr + ', ') + keys[i] + ':' +
         (typeof json[keys[i]] == 'object' && json[keys[i]] != null ? '\n' + indentStr + '    ' : ' ') + // for object children start new line
-        util.showJSON(json[keys[i]], indentStr+'    ', maxDepth-1) + '\n';
+        showJSON(json[keys[i]], indentStr+'    ', maxDepth-1) + '\n';
       str += indentStr + '}';
     }
   } else {
-    console.error('util.showJSON: internal error, unhandled type: \'' + typeof json + '\'');
+    console.error('showJSON: internal error, unhandled type: \'' + typeof json + '\'');
   }
   return str;
 };
 
-export function showTime(date) {
-  return util.padZero(2, date.getHours()) + ':' + util.padZero(2, date.getMinutes()) + ':' + util.padZero(2, date.getSeconds());
-};
+function showDate(date : Date) {
+  return ('' + date.getDate()       ).padStart(2, '0') + '-' +
+         ('' + (date.getMonth() + 1)).padStart(2, '0') + '-' +
+         ('' + date.getFullYear()   ).padStart(4, '0');
+}
 
-export function showDate(date) {
-  return util.padZero(2, date.getDate()) + '-' + util.padZero(2, date.getMonth()+1) + '-' + util.padZero(4, date.getFullYear());
-};
+function showTime(date : Date) {
+  return ('' + date.getHours()  ).padStart(2, '0') + ':' +
+         ('' + date.getMinutes()).padStart(2, '0') + ':' +
+         ('' + date.getSeconds()).padStart(2, '0');
+}
 
-export function readDate(dateStr) {
-  var parts = dateStr.split('-');
-  if (parts.length == 3)
-    return new Date(parts[2], parts[1]-1, parts[0]);
-  else
-    throw new Error("Incorrect date: '"+dateStr+"'");
+function parseDate(dateStr : string) {
+  const parts = (dateStr).match(/([0-9]{2})-([0-9]{2})-([0-9]{4})/);
+  if (parts && parts.length === 4) {
+    const [day, month, year] = parts.slice(1);
+    const date = new Date(`${year}-${month}-${day}T00:00:00+00:00`);
+    if (!isNaN(+date)) { // ugly check for Invalid Date
+      return date;
+    }
+  }
+  throw new Error(`parseDate: Date '${dateStr}' is not formatted as DD-MM-YYY`);
 };

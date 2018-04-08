@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "sourceMap": true,
+    "pretty": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strict": true, // TODO: check what this does exactly
+    "alwaysStrict": true,
+    "strictNullChecks": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2017",
+  },
+  "include": [
+    "src"
+  ]
+}
