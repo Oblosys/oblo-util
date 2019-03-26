@@ -23,7 +23,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "istanbul": "^0.4.0",
+    "istanbul": "^0.4.5",
     "jasmine-node": "^2.0.0",
     "jsdom": "^7.0.1",
     "typescript": "^2.8.1"
